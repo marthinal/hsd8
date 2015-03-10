@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function hsd8_theme() {
+  return array(
+    'hierarchical_select' => array(
+      'render element' => 'element'
+    ),
+    'hierarchical_select_selects_container' => array(
+      'render element' => 'element',
+    ),
+    'hierarchical_select_select' => array(
+      'render element' => 'element',
+    ),
+  );
+}
