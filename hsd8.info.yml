@@ -1,0 +1,9 @@
+name: HSD8
+type: module
+description: 'Hierarchical Select.'
+package: Field types
+version: VERSION
+core: 8.x
+dependencies:
+  - field
+
