@@ -1,0 +1,7 @@
+hsd8.hierarchical_select_ajax:
+  path: '/hierarchical_select_ajax'
+  defaults:
+    _controller: '\Drupal\hsd8\Controller\HierarchicalSelectController::ajaxOperation'
+  requirements:
+    _permission: 'access content'
+    _access: 'TRUE'

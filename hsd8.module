@@ -16,3 +16,31 @@ function hsd8_theme() {
     ),
   );
 }
+
+function template_preprocess_hierarchical_select(&$variables) {
+  $element = $variables['element'];
+  /*Element::setAttributes($element, array('id', 'name', 'size'));
+  Element\RenderElement::setAttributes($element, array('form-select'));*/
+
+  $variables['attributes'] = $element['#attributes'];
+  $variables['container'] = drupal_render_children($element);
+}
+
+function template_preprocess_hierarchical_select_selects_container(&$variables) {
+  $element = $variables['element'];
+  /*Element::setAttributes($element, array('id', 'name', 'size'));
+  Element\RenderElement::setAttributes($element, array('form-select'));*/
+
+  //$variables['attributes'] = $element['#attributes'];
+  $variables['selects'] = drupal_render_children($element);
+}
+
+function template_preprocess_hierarchical_select_select(&$variables) {
+  $element = $variables['element'];
+  /*element_set_attributes($element, array('id', 'name', 'size'));
+  _form_set_class($element, array('form-select'));*/
+
+ // return '<select' . drupal_attributes($element['#attributes']) . '>' . _hierarchical_select_options($element) . '</select>';
+  //$variables['attributes'] = $element['#attributes'];
+  $variables['options'] = form_select_options($element);
+}

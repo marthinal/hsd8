@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * Implements hook_hierarchical_select_root_level()
+ *
+ * @param array $params
+ * @return mixed
+ */
+function hs_taxonomy_hierarchical_select_root_level($params) {
+  $terms = \Drupal::entityManager()->getStorage('taxonomy_term')->loadTree($params['vid'], 0, 1);//_hs_taxonomy_hierarchical_select_get_tree($params['vid'], 0, -1, 1);
+  return _hs_taxonomy_hierarchical_select_terms_to_options($terms);
+}
+
+/**
+ * Transform an array of terms into an associative array of options, for use
+ * in a select form item.
+ *
+ * @param $terms
+ *  An array of term objects.
+ * @return array
+ *  An associative array of options, keys are tids, values are term names.
+ */
+function _hs_taxonomy_hierarchical_select_terms_to_options($terms) {
+  $options = array();
+  //$use_i18n = module_exists('i18n_taxonomy');
+  foreach ($terms as $key => $term) {
+    // Use the translated term when available!
+    $options[$term->tid] = $term->name;//$use_i18n && isset($term->vid) ? i18n_taxonomy_term_name($term) : $term->name;
+  }
+  return $options;
+}
+
+/**
+ * Implementation of hook_hierarchical_select_lineage().
+ */
+function hs_taxonomy_hierarchical_select_lineage($item, $params) {
+  $lineage = array();
+
+  /*if (isset($params['root_term']) && $params['root_term'] && $item == 0) {
+    return array(0);
+  }
+
+  $terms = array_reverse(hs_taxonomy_get_parents_all($item));
+  foreach ($terms as $term) {
+    $lineage[] = $term->tid;
+  }*/
+
+  return $lineage;
+}
+
+/**
+ * Alternative version of taxonomy_get_parents_all(): instead of using all
+ * parents of a term (i.e. when multiple parents are being used), only the
+ * first is kept.
+ */
+function hs_taxonomy_get_parents_all($tid) {
+  $parents = array();
+  /*if ($term = taxonomy_term_load($tid)) {
+    $parents[] = $term;
+    $n = 0;
+    while ($parent = taxonomy_get_parents($parents[$n]->tid)) {
+      $parents = array_merge($parents, array(reset($parent)));
+      $n++;
+    }
+  }*/
+  return $parents;
+}
+
+/**
+ * Implementation of hook_hierarchical_select_children().
+ *
+ * @param $parent
+ *
+ * @param $params
+ *
+ * @return array
+ */
+function hs_taxonomy_hierarchical_select_children($parent, $params) {
+
+  $terms = \Drupal::entityManager()->getStorage('taxonomy_term')->loadTree($params['vid'], $parent, 1);
+
+  return _hs_taxonomy_hierarchical_select_terms_to_options($terms);
+}

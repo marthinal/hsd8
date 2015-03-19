@@ -1,0 +1,15 @@
+hierarchical_select.config:
+  version: VERSION
+  js:
+    js/hierarchical_select.js: {}
+  css:
+    component:
+      css/hierarchical_select.css: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/jquery.form
+    - core/drupal
+    - core/drupal.form
+    - core/drupal.ajax
+    - core/drupalSettings
